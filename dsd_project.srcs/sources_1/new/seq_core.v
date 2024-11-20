@@ -21,7 +21,6 @@
 
 `include "defines.vh"
 
-
 module seq_core
 #(
     parameter D_SIZE = 32,
@@ -60,20 +59,48 @@ integer i;
 `define cond      instruction[11:9]
 
 
+always @*
+begin
+   case (instruction[15:11])
+        `LOAD: begin
+            read  = 1;
+            write = 0;
+            
+            address  = R[`lsop1][A_SIZE-1:0];
+        end
+        `LOADC: begin
+            read  = 1;
+            write = 0;
+        end
+        `STORE: begin
+            read  = 0;
+            write = 1;
+            
+            address  = R[`lsop0][A_SIZE-1:0];
+            data_out = R[`lsop1];
+        end
+        default: begin
+            read  = 0;
+            write = 0;
+        end
+        endcase     
+end
+
+always @(negedge rst)
+begin
+    pc <= 0;
+    read <= 0;
+    write <= 0;
+    address <= 0;
+    data_out <= 0;
+    
+    for (i = 0; i < 8; i = i + 1)
+        R[i] <= 0;
+end
+
 always @(posedge clk)
 begin
-    if (rst == 0)
-    begin
-        pc <= 0;
-        read <= 0;
-        write <= 0;
-        address <= 0;
-        data_out <= 0;
-        
-        for (i = 0; i < 8; i = i + 1)
-            R[i] <= 0;
-    end
-    else
+    if (rst == 1)
     begin
         case (instruction[15:0])
         `NOP:  ;
@@ -111,28 +138,10 @@ begin
         
         case (instruction[15:11])
         `LOAD: begin
-            read  <= 1;
-            write <= 0;
-            
-            address  <= R[`lsop1][A_SIZE-1:0];
             R[`lsop0] <= data_in;
         end
         `LOADC: begin
-            read  <= 1;
-            write <= 0;
-            
             R[`lsop0] <= {R[`lsop0][D_SIZE-1:8], `const};
-        end
-        `STORE: begin
-            read  <= 0;
-            write <= 1;
-            
-            address  <= R[`lsop0][A_SIZE-1:0];
-            data_out <= R[`lsop1];
-        end
-        default: begin
-            read  <= 0;
-            write <= 0;
         end
         endcase
         
