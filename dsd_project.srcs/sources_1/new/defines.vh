@@ -1,3 +1,6 @@
+`define I_SIZE 32
+`define RS_SIZE 3
+
 `define NOP      16'b00000000_00000000
 `define HALT     16'b11111111_11111111
 `define ADD       7'b0000001
