@@ -19,8 +19,11 @@ module read_block
     output reg [`RS_SIZE-1:0] out_reg_sel2,
     
     output reg [`I_SIZE-1:0] out_ir,
-    output reg [D_SIZE-1:0] out_op1,
-    output reg [D_SIZE-1:0] out_op2
+    output reg [D_SIZE-1:0]  out_op1,
+    output reg [D_SIZE-1:0]  out_op2,
+    
+    output reg [`RS_SIZE-1:0] dest,
+    output reg [`RS_SIZE-1:0] dest_valid
 );
 
 reg [D_SIZE-1:0] op1;
@@ -29,46 +32,62 @@ reg [D_SIZE-1:0] op2;
 reg [`RS_SIZE-1:0] reg_sel1;
 reg [`RS_SIZE-1:0] reg_sel2;
 
+`define NO_DEST dest = 0; dest_valid = 0;
+
+
 always @* begin
-    case (ir[15:14])
+    case (ir[`IT_POS])
         // Arithmethic
-        2'b00 : begin
-            if (ir[13]) begin // has immediate
+        `IT_AR : begin
+            if (ir[`I_AR_HAVE_IMM_POS]) begin // has immediate
                 op1 = { 10'b0, ir[5:0] };
                 op2 = 16'b0;
                 
                 reg_sel1 = `RS_SIZE'b0;
                 reg_sel2 = `RS_SIZE'b0;
+                
+                dest = ir[`I_AR_OP0_POS];
+                dest_valid = 1;
             end
             else begin
                 op1 = reg_op1;
                 op2 = reg_op2;
                 
-                reg_sel1 = ir[5:3];
-                reg_sel2 = ir[2:0];
+                reg_sel1 = ir[`I_AR_OP1_POS];
+                reg_sel2 = ir[`I_AR_OP2_POS];
+                
+                dest = ir[`I_AR_OP0_POS];
+                dest_valid = 1;
             end
         end
 
-        // Load/Store
-        2'b01: begin
-            if (ir[13]) begin // has immediate
-                op1 = { 8'b0, ir[7:0] };
-                op2 = 16'b0;
+        // Load/Store 
+        `IT_LS: begin
+            if (ir[`I_LS_HAVE_IMM_POS]) begin // has immediate
+                op1 = reg_op1;
+                op2 = { 8'b0, ir[7:0] };
                 
-                reg_sel1 = `RS_SIZE'b0;
+                reg_sel1 = ir[`I_LS_OP0_POS];
                 reg_sel2 = `RS_SIZE'b0;
             end
             else begin
                 op1 = reg_op1;
-                op2 = 16'b0;
+                op2 = reg_op2;
 
-                reg_sel1 = ir[2:0];
-                reg_sel2 = `RS_SIZE'b0;
+                reg_sel1 = ir[`I_LS_OP0_POS];
+                reg_sel2 = ir[`I_LS_OP0_POS];
+            end
+            
+            if (ir[`I_LS_IS_STORE_POS]) begin
+                `NO_DEST
+            end else begin
+                dest = ir[`I_LS_OP0_POS];
+                dest_valid = 1;
             end
         end
 
         // Jumps
-        2'b10: begin
+        `IT_JMP: begin
             if (ir[13]) begin // has immediate
                 // sign extended
                 op1 = { {(10){ir[5]}}, ir[5:0] };
@@ -91,15 +110,19 @@ always @* begin
                 
                 reg_sel2 = `RS_SIZE'b0;
             end
+            
+            `NO_DEST
         end
 
         // NOP or HALT
-        2'b11: begin
+        `IT_NH: begin
             op1 = 16'b0;
             op2 = 16'b0;
             
             reg_sel1 = `RS_SIZE'b0;
             reg_sel2 = `RS_SIZE'b0;
+            
+            `NO_DEST
         end
     endcase
 end

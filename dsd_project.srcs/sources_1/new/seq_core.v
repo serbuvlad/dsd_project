@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-`include "defines.vh"
+`include "olddefines.vh"
 
 module seq_core
 #(
