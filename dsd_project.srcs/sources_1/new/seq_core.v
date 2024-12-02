@@ -1,23 +1,5 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 10/08/2024 01:13:00 PM
-// Design Name: 
-// Module Name: seq_core
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+
 
 `include "defines.vh"
 
@@ -36,9 +18,9 @@ module seq_core
     // data memory
     output 	reg read,  // active 1
     output 	reg write, // active 1
-    output reg [A_SIZE-1:0]	address,
-    input  [D_SIZE-1:0]	data_in,
-    output reg [D_SIZE-1:0]	data_out
+    output  reg [A_SIZE-1:0]	address,
+    input       [D_SIZE-1:0]	data_in,
+    output  reg [D_SIZE-1:0]	data_out
 );
 
 reg [D_SIZE-1:0] R [0:7];

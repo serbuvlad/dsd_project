@@ -15,15 +15,13 @@ module fetch_block
     output reg [15:0] ir
 );
 
-always @(negedge rst) begin
-    pc <= 0;
-    ir <= 0;
-end
-
 always @(posedge clk) begin
-    if (rst) begin
+    if (rst == 1) begin
         pc <= pc + 1;
         ir <= instruction;
+    end else begin
+        pc <= 0;
+        ir <= 0;
     end
 end
 
