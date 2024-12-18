@@ -89,3 +89,8 @@
 
 xsim.dir
 *.runs
+
+!*.go
+!*.asm
+!go.mod
+!go.sum
