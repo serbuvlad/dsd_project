@@ -29,7 +29,11 @@ module execute_block
     output reg              out_read,
     output reg              out_write,
     output reg [A_SIZE-1:0] out_addr,
-    output reg [D_SIZE-1:0] out_data_out
+    output reg [D_SIZE-1:0] out_data_out,
+    
+    output reg [A_SIZE-1:0] out_pc,
+    output reg              out_pc_valid,
+    output reg              out_pc_relative
 );
 
 reg [D_SIZE-1:0] result;
@@ -38,9 +42,16 @@ reg              read;
 reg              write;
 reg [A_SIZE-1:0] addr;
 reg [D_SIZE-1:0] data_out;
+reg [A_SIZE-1:0] pc;
+reg              pc_valid;
+wire             pc_relative;
 
-`define NOP   read = 0; write = 0; addr = 0; data_out = 0; src_mem = 0; result = 0;
+assign pc_relative = ir[`I_JMP_HAVE_IMM_POS];
+
+`undef NOP
+`define NOP   read = 0; write = 0; addr = 0; data_out = 0; src_mem = 0; result = 0; pc = 0; pc_valid = 0;
 `define NO_RW read = 0; write = 0; addr = 0; data_out = 0; src_mem = 0;
+`define NO_PC pc = 0; pc_valid = 0;
 
 always @* begin
     case (ir[`IT_POS])
@@ -71,12 +82,15 @@ always @* begin
                     write = 1;
                     addr = op1;
                     data_out = op2;
-                    src_mem = 1;
+                    src_mem = 0;
+                    
+                    `NO_PC
                 end
                 `I_LS_OP_LOADC: begin
                     result = {op1[D_SIZE-1:8], op2[7:0]};
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_LS_OP_LOAD: begin
                     result = 0;
@@ -85,7 +99,9 @@ always @* begin
                     write = 0;
                     addr = op2;
                     data_out = 0;
-                    src_mem = 0;
+                    src_mem = 1;
+                    
+                    `NO_PC
                 end
                 default: begin
                     `NOP
@@ -93,9 +109,27 @@ always @* begin
             endcase
         end
         
-        // TODO
+        // Jump
         `IT_JMP: begin
-            `NOP
+            
+            if (
+                !ir[`I_JMP_HAVE_COND_POS] ||
+                (ir[`I_JMP_HAVE_COND_POS] && ir[`I_JMP_COND_POS] == `I_JMP_COND_N  &&  op2[`D_SIZE_NEGATIVE_BIT_POS]) ||
+                (ir[`I_JMP_HAVE_COND_POS] && ir[`I_JMP_COND_POS] == `I_JMP_COND_NN && !op2[`D_SIZE_NEGATIVE_BIT_POS]) ||
+                (ir[`I_JMP_HAVE_COND_POS] && ir[`I_JMP_COND_POS] == `I_JMP_COND_Z  && op2 == 0) ||
+                (ir[`I_JMP_HAVE_COND_POS] && ir[`I_JMP_COND_POS] == `I_JMP_COND_NZ && op2 != 0)
+            ) begin
+                pc = op1;
+                pc_valid = 1;
+                
+                result = 0;
+                `NO_RW
+            end else begin
+                `NO_PC
+                
+                result = 0;
+                `NO_RW
+            end 
         end
         
         // Arithmethic
@@ -105,51 +139,61 @@ always @* begin
                     result = op1 + op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_ADDF: begin
                     result = op1 + op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_SUB: begin
                     result = op1 - op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_SUBF: begin
                     result = op1 - op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_AND: begin
                     result = op1 & op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_OR: begin
                     result = op1 | op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_XOR: begin
                     result = op1 ^ op2;
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_NAND: begin
                     result = ~(op1 & op2);
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_NOR: begin
                     result = ~(op1 | op2);
                     
                     `NO_RW
+                    `NO_PC
                 end
                 `I_AR_OP_NXOR: begin
                     result = ~(op1 ^ op2);
                     
                     `NO_RW
+                    `NO_PC
                 end
                 default: begin
                     `NOP
@@ -172,6 +216,9 @@ always @(posedge clk) begin
         out_write <= write;
         out_addr <= addr;
         out_data_out <= data_out;
+        out_pc <= pc;
+        out_pc_valid <= pc_valid;
+        out_pc_relative <= pc_relative;
     end else begin
         out_result <= 0;
         out_dest <= 0;
@@ -181,6 +228,9 @@ always @(posedge clk) begin
         out_write <= 0;
         out_addr <= 0;
         out_data_out <= 0;
+        out_pc <= 0;
+        out_pc_valid <= 0;
+        out_pc_relative <= 0;
     end
 end
 

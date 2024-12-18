@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_pipeline_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_pipeline" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="24.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="127.401 ns"></ZoomEndTime>
+      <Cursor1Time time="150.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="229"></NameColumnWidth>
+      <ValueColumnWidth column_width="246"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="42" />
+   <wvobject type="logic" fp_name="/tb_pipeline/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/pc">
+      <obj_property name="ElementShortName">pc[9:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/instructions">
+      <obj_property name="ElementShortName">instructions[0:8][15:0]</obj_property>
+      <obj_property name="ObjectShortName">instructions[0:8][15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/instruction">
+      <obj_property name="ElementShortName">instruction[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instruction[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/read">
+      <obj_property name="ElementShortName">read</obj_property>
+      <obj_property name="ObjectShortName">read</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/write">
+      <obj_property name="ElementShortName">write</obj_property>
+      <obj_property name="ObjectShortName">write</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/address">
+      <obj_property name="ElementShortName">address[9:0]</obj_property>
+      <obj_property name="ObjectShortName">address[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/data_in">
+      <obj_property name="ElementShortName">data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/data_out">
+      <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/mem">
+      <obj_property name="ElementShortName">mem[0:1023][31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[0:1023][31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/D_SIZE">
+      <obj_property name="ElementShortName">D_SIZE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">D_SIZE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/A_SIZE">
+      <obj_property name="ElementShortName">A_SIZE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">A_SIZE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/pc">
+      <obj_property name="ElementShortName">pc[9:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/instruction">
+      <obj_property name="ElementShortName">instruction[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instruction[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/read">
+      <obj_property name="ElementShortName">read</obj_property>
+      <obj_property name="ObjectShortName">read</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/write">
+      <obj_property name="ElementShortName">write</obj_property>
+      <obj_property name="ObjectShortName">write</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/address">
+      <obj_property name="ElementShortName">address[9:0]</obj_property>
+      <obj_property name="ObjectShortName">address[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/data_in">
+      <obj_property name="ElementShortName">data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/data_out">
+      <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/ir">
+      <obj_property name="ElementShortName">ir[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ir[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/reg_sel1">
+      <obj_property name="ElementShortName">reg_sel1[2:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_sel1[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/reg_sel2">
+      <obj_property name="ElementShortName">reg_sel2[2:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_sel2[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/reg_op1">
+      <obj_property name="ElementShortName">reg_op1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_op1[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/reg_op2">
+      <obj_property name="ElementShortName">reg_op2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_op2[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/ir_read2exec">
+      <obj_property name="ElementShortName">ir_read2exec[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ir_read2exec[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/op1">
+      <obj_property name="ElementShortName">op1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">op1[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/op2">
+      <obj_property name="ElementShortName">op2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">op2[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/dest_read2exec">
+      <obj_property name="ElementShortName">dest_read2exec[2:0]</obj_property>
+      <obj_property name="ObjectShortName">dest_read2exec[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/dest_valid_read2exec">
+      <obj_property name="ElementShortName">dest_valid_read2exec</obj_property>
+      <obj_property name="ObjectShortName">dest_valid_read2exec</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/dest_exec2wb">
+      <obj_property name="ElementShortName">dest_exec2wb[2:0]</obj_property>
+      <obj_property name="ObjectShortName">dest_exec2wb[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/dest_valid_exec2wb">
+      <obj_property name="ElementShortName">dest_valid_exec2wb</obj_property>
+      <obj_property name="ObjectShortName">dest_valid_exec2wb</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/result_exec2wb">
+      <obj_property name="ElementShortName">result_exec2wb[31:0]</obj_property>
+      <obj_property name="ObjectShortName">result_exec2wb[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/src_mem">
+      <obj_property name="ElementShortName">src_mem</obj_property>
+      <obj_property name="ObjectShortName">src_mem</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/dest_wb2regs">
+      <obj_property name="ElementShortName">dest_wb2regs[2:0]</obj_property>
+      <obj_property name="ObjectShortName">dest_wb2regs[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_pipeline/s/dest_valid_wb2regs">
+      <obj_property name="ElementShortName">dest_valid_wb2regs</obj_property>
+      <obj_property name="ObjectShortName">dest_valid_wb2regs</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/result_wb2regs">
+      <obj_property name="ElementShortName">result_wb2regs[31:0]</obj_property>
+      <obj_property name="ObjectShortName">result_wb2regs[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/D_SIZE">
+      <obj_property name="ElementShortName">D_SIZE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">D_SIZE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/A_SIZE">
+      <obj_property name="ElementShortName">A_SIZE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">A_SIZE[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_pipeline/s/regs/R">
+      <obj_property name="ElementShortName">R[7:0][31:0]</obj_property>
+      <obj_property name="ObjectShortName">R[7:0][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[7]">
+         <obj_property name="ElementShortName">[7][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[6]">
+         <obj_property name="ElementShortName">[6][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[5]">
+         <obj_property name="ElementShortName">[5][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[4]">
+         <obj_property name="ElementShortName">[4][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[3]">
+         <obj_property name="ElementShortName">[3][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[2]">
+         <obj_property name="ElementShortName">[2][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[1]">
+         <obj_property name="ElementShortName">[1][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_pipeline/s/regs/R[0]">
+         <obj_property name="ElementShortName">[0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

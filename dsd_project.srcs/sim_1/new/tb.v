@@ -22,9 +22,11 @@ module tb
     reg  [D_SIZE-1:0] data_in;
     wire [D_SIZE-1:0] data_out;
     
+    reg  [D_SIZE-1:0] mem [0:1023];
+
     assign #1 instruction = instructions[pc];
-    
-    seq_core #(.D_SIZE(D_SIZE), .A_SIZE(A_SIZE)) s (
+
+    processor #(.D_SIZE(D_SIZE), .A_SIZE(A_SIZE)) s (
         .rst(rst),
         .clk(clk),
         .pc(pc),
@@ -38,34 +40,22 @@ module tb
     
     always #10 clk = ~clk;
     
+    
+    
     initial begin
         rst <= 0;
         clk <= 0;
         
-        data_in <= 5;
-        
-        
-        // multiplication
-        
-        // R0 -- constant 0
-        // R1 -- number to add
-        // R2 -- number of times to add (coutner)
-        // R4 -- accumulator
-        // R5 -- constant 1
-        
-        instructions[0] = {`LOAD, `R1, 5'd0, `R0};
-        instructions[1] = {`LOADC, `R2, 8'd7};
-        
-        instructions[2] = {`LOADC, `R5, 8'd1};
-        
-        instructions[3] = {`JMPRZ, `R2, 6'd4};
-        instructions[4] = {`ADD, `R4, `R4, `R1};
-        instructions[5] = {`SUB, `R2, `R2, `R5};
-        instructions[6] = {`JMPR, 6'd0, 6'b111_101};
-
-        instructions[7] = {`STORE, `R0, 5'd0, `R4}; // -3
-        instructions[6] = {`JMPR, 6'd0, 6'b0};
-
+    instructions[0] = 16'b0;
+        instructions[1] = 16'b0;
+        instructions[2] = 16'b110000100010110;
+        instructions[3] = 16'b110001000100001;
+        instructions[4] = 16'b0;
+        instructions[5] = 16'b0;
+        instructions[6] = 16'b0;
+        instructions[7] = 16'b0;
+        instructions[8] = 16'b1100000000001010;
+        instructions[9] = 16'b11111111111111;
 
         #20
         

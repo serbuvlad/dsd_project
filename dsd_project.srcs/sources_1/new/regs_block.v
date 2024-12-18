@@ -22,7 +22,7 @@ module regs_block
     input [D_SIZE-1:0]   result
 );
 
-reg [D_SIZE-1:0] R [`RS_SIZE-1:0];
+reg [D_SIZE-1:0] R [7:0];
 integer i;
 
 assign op1 = R[sel1];
@@ -30,12 +30,12 @@ assign op2 = R[sel2];
 
 always @(posedge clk) begin
     if (rst) begin
-        for (i = 0; i < `RS_SIZE; i = i + 1) begin
-            R[i] <= 0;
-        end
-    end else begin
         if (dest_valid) begin
             R[dest] <= result;
+        end
+    end else begin
+        for (i = 0; i < 8; i = i + 1) begin
+            R[i] <= 0;
         end
     end
 end
