@@ -27,14 +27,14 @@ module data_peddler_block
     output reg [D_SIZE-1:0]   op2_to_executor,
     
     input [D_SIZE-1:0] result_from_executor,
-    input [D_SIZE-1:0] dest_from_executor,
+    input [`RS_SIZE-1:0] dest_from_executor,
     input              dest_valid_from_executor,
     input              src_mem_from_executor,
     input              pc_valid_from_executor,
     
     input [D_SIZE-1:0] result_from_wb,
-    input [D_SIZE-1:0] dest_from_wb,
-    input [D_SIZE-1:0] dest_valid_from_wb
+    input [`RS_SIZE-1:0] dest_from_wb,
+    input              dest_valid_from_wb
 );
 
 `define HALT_FETCHER    halt_to_fetcher = 1;
@@ -64,7 +64,7 @@ always @* begin
         op1_wants_halt = 1;
     
     // In the case where op1 is being written back
-    end if (op1_reg_valid_from_reader && op1_reg_from_reader == dest_from_wb && dest_valid_from_wb) begin
+    end else if (op1_reg_valid_from_reader && op1_reg_from_reader == dest_from_wb && dest_valid_from_wb) begin
         op1_to_executor = result_from_wb;
         op1_wants_halt = 0;
     
@@ -77,7 +77,7 @@ always @* begin
     // Same for op2
     
     // In the case where op2 has just been calculated by the executor
-    if (op2_reg_valid_from_reader && op2_reg_from_reader == dest_from_executor && dest_valid_from_executor && !src_mem_from_executor ) begin
+    if (op2_reg_valid_from_reader && op2_reg_from_reader == dest_from_executor && dest_valid_from_executor && !src_mem_from_executor) begin
         op2_to_executor = result_from_executor;
         op2_wants_halt = 0;
     
@@ -87,7 +87,7 @@ always @* begin
         op2_wants_halt = 1;
     
     // In the case where op2 is being written back
-    end if (op2_reg_from_reader == dest_from_wb && dest_valid_from_wb) begin
+    end else if (op2_reg_valid_from_reader && op2_reg_from_reader == dest_from_wb && dest_valid_from_wb) begin
         op2_to_executor = result_from_wb;
         op2_wants_halt = 0;
     

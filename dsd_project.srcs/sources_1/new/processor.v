@@ -22,11 +22,15 @@ module processor
     output [D_SIZE-1:0]	data_out
 );
 
+// Data peddler to fetch interface
+wire halt_dp2fetch;
+
+
 // Fetch to data peddler interface
 wire [`I_SIZE-1:0]  ir_fetch2dp;
 
-// Data peddler to fetch interface
-wire halt_dp2fetch;
+// Data peddler to read interface
+wire [`I_SIZE-1:0] ir_dp2read;
 
 // Read to regs interface
 wire [`RS_SIZE-1:0] reg_sel1;
@@ -163,10 +167,10 @@ executor
     .out_dest_valid(dest_valid_exec2wb),
     .out_src_mem(src_mem_exec2wb),
     
-    .out_read(read),
-    .out_write(write),
-    .out_addr(address),
-    .out_data_out(data_out),
+    .oquick_read(read),
+    .oquick_write(write),
+    .oquick_addr(address),
+    .oquick_data_out(data_out),
     
     .out_pc(proposed_pc_exec2fetch),
     .out_pc_valid(proposed_pc_valid_exec2fetch),
@@ -186,7 +190,7 @@ write_back_writer
     .dest(dest_exec2wb),
     .dest_valid(dest_valid_exec2wb),
     .exec_result(result_exec2wb),
-    .src_mem(src_mem),
+    .src_mem(src_mem_exec2wb),
     
     .data_in(data_in),
     
@@ -226,6 +230,8 @@ data_peddler
     .halt_to_fetcher(halt_dp2fetch),
     
     .ir_from_fetcher(ir_fetch2dp),
+    
+    .ir_to_reader(ir_dp2read),
     
     .ir_from_reader(ir_read2dp),
     .op1_from_reader(op1_read2dp),

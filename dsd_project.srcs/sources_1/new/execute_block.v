@@ -26,10 +26,10 @@ module execute_block
     output reg                out_dest_valid,
     output reg                out_src_mem,
     
-    output reg              out_read,
-    output reg              out_write,
-    output reg [A_SIZE-1:0] out_addr,
-    output reg [D_SIZE-1:0] out_data_out,
+    output reg              oquick_read,
+    output reg              oquick_write,
+    output reg [A_SIZE-1:0] oquick_addr,
+    output reg [D_SIZE-1:0] oquick_data_out,
     
     output reg [A_SIZE-1:0] out_pc,
     output reg              out_pc_valid,
@@ -38,10 +38,6 @@ module execute_block
 
 reg [D_SIZE-1:0] result;
 reg              src_mem;
-reg              read;
-reg              write;
-reg [A_SIZE-1:0] addr;
-reg [D_SIZE-1:0] data_out;
 reg [A_SIZE-1:0] pc;
 reg              pc_valid;
 wire             pc_relative;
@@ -49,8 +45,8 @@ wire             pc_relative;
 assign pc_relative = ir[`I_JMP_HAVE_IMM_POS];
 
 `undef NOP
-`define NOP   read = 0; write = 0; addr = 0; data_out = 0; src_mem = 0; result = 0; pc = 0; pc_valid = 0;
-`define NO_RW read = 0; write = 0; addr = 0; data_out = 0; src_mem = 0;
+`define NOP   oquick_read = 0; oquick_write = 0; oquick_addr = 0; oquick_data_out = 0; src_mem = 0; result = 0; pc = 0; pc_valid = 0;
+`define NO_RW oquick_read = 0; oquick_write = 0; oquick_addr = 0; oquick_data_out = 0; src_mem = 0;
 `define NO_PC pc = 0; pc_valid = 0;
 
 always @* begin
@@ -78,10 +74,10 @@ always @* begin
                 `I_LS_OP_STORE: begin
                     result = 0;
                     
-                    read = 0;
-                    write = 1;
-                    addr = op1;
-                    data_out = op2;
+                    oquick_read = 0;
+                    oquick_write = 1;
+                    oquick_addr = op1;
+                    oquick_data_out = op2;
                     src_mem = 0;
                     
                     `NO_PC
@@ -95,10 +91,10 @@ always @* begin
                 `I_LS_OP_LOAD: begin
                     result = 0;
                     
-                    read = 1;
-                    write = 0;
-                    addr = op2;
-                    data_out = 0;
+                    oquick_read = 1;
+                    oquick_write = 0;
+                    oquick_addr = op2;
+                    oquick_data_out = 0;
                     src_mem = 1;
                     
                     `NO_PC
@@ -212,10 +208,6 @@ always @(posedge clk) begin
         out_dest <= dest;
         out_dest_valid <= dest_valid;
         out_src_mem <= src_mem;
-        out_read <= read;
-        out_write <= write;
-        out_addr <= addr;
-        out_data_out <= data_out;
         out_pc <= pc;
         out_pc_valid <= pc_valid;
         out_pc_relative <= pc_relative;
@@ -223,11 +215,7 @@ always @(posedge clk) begin
         out_result <= 0;
         out_dest <= 0;
         out_dest_valid <= 0;
-        out_src_mem <= 0;      
-        out_read <= 0;
-        out_write <= 0;
-        out_addr <= 0;
-        out_data_out <= 0;
+        out_src_mem <= 0;
         out_pc <= 0;
         out_pc_valid <= 0;
         out_pc_relative <= 0;

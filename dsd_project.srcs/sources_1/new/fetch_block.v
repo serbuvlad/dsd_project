@@ -23,7 +23,7 @@ module fetch_block
     output reg [`I_SIZE-1:0] out_ir
 );
 
-wire pc;
+wire [A_SIZE-1:0] pc;
 
 assign pc = 
     proposed_pc_valid ? (
